@@ -8,7 +8,7 @@ from Crypto.Cipher import AES
 import os
 
 SECRET_KEY = b'supersecretkey'
-AES_KEY = b'weakAESkey123456'  # Vulnerability: weak AES key (16 bytes)
+AES_KEY = b'weakAESkey123456' 
 MAX_MESSAGE_LENGTH = 1024  # Define a maximum message length
 counter_lock = threading.Lock()  # Lock for thread-safe access to counter
 
