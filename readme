@@ -14,8 +14,21 @@ Required Libraries:
   - pycryptodome
 
 
-To run the server
+To run the server (RUN SERVER BEFORE CLIENTS)
 $ python server.py
 
 To run the client
 $ python client.py
+
+NOTE: when entering name in terminal ruunning client.py, sometimes you may recieve the following output: 
+         " Enter your name: abh
+          Server (JSON): {
+            "type": "name_response",
+            "available": true
+          }"
+In this instance, just CTRL C and run the client.py again and it should work. This is just a bug with the current version of the code and will be fixed before final submission.
+
+
+TODO:
+  -Inter server connections
+  -User Interface

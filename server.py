@@ -9,7 +9,7 @@ import signal
 import sys
 
 SECRET_KEY = b'supersecretkey'
-AES_KEY = b'weakAESkey123456'  # Vulnerability: weak AES key (16 bytes)
+AES_KEY = b'weakAESkey123456' 
 MAX_MESSAGE_LENGTH = 1024  # Define a maximum message length
 
 shutdown_flag = False  # Flag to control server shutdown
