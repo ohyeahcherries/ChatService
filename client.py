@@ -115,9 +115,11 @@ def request_name(sock):
 try:
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))
+    client_socket.settimeout(10)  # Set a timeout of 10 seconds
 except Exception as e:
     print(f"Error connecting to server: {e}")
     exit()
+    
 
 # Start a thread to listen for messages from the server
 threading.Thread(target=receive_messages, args=(client_socket,), daemon=True).start()
