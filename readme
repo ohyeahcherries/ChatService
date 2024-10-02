@@ -10,6 +10,9 @@ listclients - a client may send "listclients" and be returned with a list of con
 
 message - a client may privately message another user by sending "message {user} {message}", where {user} is the chosen recipient, and {message} is the message they want to send.
 
+Required Libraries:
+  - pycryptodome
+
 
 To run the server
 $ python server.py
