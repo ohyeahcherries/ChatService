@@ -125,7 +125,7 @@ def request_name(sock):
 try:
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))
-    client_socket.settimeout(10)  # Set a timeout of 10 seconds
+
 except Exception as e:
     print(f"Error connecting to server: {e}")
     exit()
