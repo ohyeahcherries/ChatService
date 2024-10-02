@@ -9,6 +9,7 @@ import signal
 import sys
 
 SECRET_KEY = b'supersecretkey'
+AES_KEY = b'weakAESkey123456'  # Vulnerability: weak AES key (16 bytes)
 MAX_MESSAGE_LENGTH = 1024  # Define a maximum message length
 
 shutdown_flag = False  # Flag to control server shutdown
@@ -100,14 +101,9 @@ def handle_client(conn, addr, last_counter):
                 client_list_str = "List of clients:\n" + "\n".join(client_list)
                 conn.sendall(client_list_str.encode('utf-8'))
 
-            elif message['data'].startswith("message "):
-                parts = message['data'].split(' ', 2)
-                if len(parts) < 3:
-                    print(f"Invalid private message format from {addr}")
-                    continue
-                
-                recipient_name = parts[1]
-                actual_message = parts[2]
+            elif message['type'] == "private_message":
+                recipient_name = message.get('recipient')
+                private_message = message['data']
 
                 recipient_addr = None
                 for client_addr, info in client_info.items():
@@ -116,9 +112,13 @@ def handle_client(conn, addr, last_counter):
                         break
 
                 if recipient_addr:
-                    private_message = f"{client_info[addr]['name']} to you: {actual_message}"
-                    conn_dict[recipient_addr].sendall(private_message.encode('utf-8'))
-                    print(f"Private message from {client_info[addr]['name']} to {recipient_name}: {actual_message}")
+                    relay_message = {
+                        "type": "private_message",
+                        "data": private_message,
+                        "sender": client_info[addr]['name']  # Include the sender's name
+                    }
+                    conn_dict[recipient_addr].sendall(json.dumps(relay_message).encode('utf-8'))
+                    print(f"Private message from {client_info[addr]['name']} to {recipient_name}: {private_message}")
                 else:
                     conn.sendall(f"User '{recipient_name}' not found.".encode('utf-8'))
             else:
