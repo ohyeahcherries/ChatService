@@ -44,11 +44,20 @@ def receive_messages(sock):
             try:
                 message = json.loads(response.decode('utf-8'))
 
+                # Check for name response
+                if message.get("type") == "name_response":
+                    if message.get("available"):
+                        print(f"Name '{name}' accepted.")
+                    else:
+                        print(f"Name '{name}' is taken. Please choose another one.")
+                
                 # Check for private message
-                if message.get("type") == "private_message":
+                elif message.get("type") == "private_message":
                     decrypted_message = decrypt_message(message["data"])
                     sender = message.get("sender", "Unknown")
                     print(f"\n{sender} to me: {decrypted_message}")
+                
+                # Fallback for other types of JSON messages
                 else:
                     print(f"Server (JSON): {json.dumps(message, indent=2)}")
 
@@ -65,6 +74,7 @@ def receive_messages(sock):
         except Exception as e:
             print(f"Error receiving message: {e}")
             break
+
 
 def send_message(sock, message):
     with counter_lock:
