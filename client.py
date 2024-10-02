@@ -1,3 +1,5 @@
+#THIS FILE CONTAINS VULNERABILITIES
+
 import socket
 import json
 import hmac
@@ -125,7 +127,6 @@ def request_name(sock):
 try:
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))
-
 except Exception as e:
     print(f"Error connecting to server: {e}")
     exit()

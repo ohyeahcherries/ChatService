@@ -1,3 +1,5 @@
+#THIS FILE CONTAINS VULNERABILITIES
+
 import socket
 import json
 import hmac
